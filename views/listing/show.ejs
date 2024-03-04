@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+</head>
+<body>
+    
+    <h1> listing items</h1>
+
+    <ul>
+        <li> <%= listingitem.title %></li>
+        <li> <%= listingitem.description %></li>
+        <li> <%= listingitem.image %></li>
+        <li> &#8377;<%= listingitem.price.toLocaleString("en-IN") %></li>
+        <li> <%= listingitem.location %></li>
+        <li> <%= listingitem.country %></li>
+    </ul>
+
+</body>
+</html>
