@@ -1,14 +1,17 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const listing = require("./models/listings.js");
+//const listing = require("./models/listings.js");
 const path = require("path");
 const listings = require("./models/listings.js");
-
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 app.set("view engine","views");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
+app.use(methodOverride("_method"))
+app.engine("ejs","ejs-mate");
 
 
 main()
@@ -45,21 +48,45 @@ app.get("/listings/new",(req,res)=>{
 
 // create route
 app.post("/listings",async(req,res)=>{
-    const newListing = new listing(req.body.listing);
+    const newListing = new listings(req.body.listing);
     // new listing(req.body.listing)          // here '.listing' is object and using listing a model to access ".listing"// 
     await newListing.save();
     console.log(listing);
-    res.redirect("/listings")
+    res.redirect("/listings");
 })
 
 // show route
 app.get("/listings/:id",async(req,res)=>{
     let {id} = req.params;
     const listingitem = await listings.findById(id);
-    res.render("listing/show.ejs",{listingitem});
+    res.render("listing/show.ejs",{listingitem}); 
 });
 
 
+// edit route
+app.get("/listings/:id/edit",async (req,res)=>{
+    let {id} = req.params;
+    const listing = await listings.findById(id);    // then find out listing on id basis//
+    res.render("listing/edit.ejs",{listing})
+});
+
+
+// update route 
+app.put("/listings/:id",async(req,res)=>{
+    let {id} = req.params;
+    await listings.findByIdAndUpdate(id,{...req.body.listing});  // here, we have deconstructed & updated our javascript obj {...} //
+    console.log("edited");
+    res.redirect(`/listings/${id}`);
+})
+
+
+// delete route
+app.delete("/listings/:id",async (req,res)=>{
+    let {id} = req.params;
+    let deleted = await listings.findByIdAndDelete(id);
+    console.log(deleted);
+    res.redirect("/listings");
+});
 
 /*app.get("/listing",async(req,res)=>{
     let sampleListing = new listing({
