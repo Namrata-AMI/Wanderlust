@@ -52,6 +52,7 @@ const validateListing = (req,res,next)=>{
 
 /////// validate comment  data //////////
 const validateReview = (req,res,next)=>{
+    console.log(req.body,"hello");
     let error = reviewSchema.validate(req.body);             // extract our error
     console.log(error);
     if(error){
@@ -138,6 +139,8 @@ app.post("/listings/:id/reviews", validateReview ,wrapAsync(async(req,res)=>{
         await newReview.save();
         await listing.save();
     
+        console.log(newReview);
+        console.log(listing);
         console.log("new review saved");
         res.redirect(`/listings/${listing._id}`)   // here listing is =>listing id extracted abode in (req.params.id)//
 
@@ -165,6 +168,7 @@ app.all("*",(req,res,next)=>{
 
 
 app.use((err,req,res,next)=>{
+    console.log(err.message);
     let {statusCode=500,message="something went wrong!"} = err;
     res.status(statusCode).render("error.ejs",{err});
    // res.status(statusCode).send(message);
