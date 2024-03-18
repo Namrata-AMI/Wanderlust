@@ -31,10 +31,13 @@ const listingSchema = new Schema({
         type:String
     },
 
-    review:{
+    review:
+    [
+        {
         type:Schema.Types.ObjectId,
         ref:"Review"
     }
+]
 });
 
 const listing = mongoose.model("Listing",listingSchema);
