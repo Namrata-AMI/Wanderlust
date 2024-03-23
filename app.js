@@ -41,7 +41,7 @@ app.get("/",(req,res)=>{
 const validateListing = (req,res,next)=>{
     let error = listingSchema.validate(req.body);             // extract our error
     console.log(error);
-    if(error){
+    if(error && error.details){
         let errMsg = error.details.map((el)=>el.message).join(",");     // err message
         throw new ExpressError(400,errMsg);
     }
@@ -53,7 +53,7 @@ const validateListing = (req,res,next)=>{
 /////// validate comment  data //////////
 const validateReview = (req,res,next)=>{
     console.log(req.body,"hello");
-    let error = reviewSchema.validate(req.body);             // extract our error
+    let {error} = reviewSchema.validate(req.body);             // extract our error
     console.log(error);
     if(error){
         let errMsg = error.details.map((el)=>el.message).join(",");     // err message
@@ -164,7 +164,7 @@ app.post("/listings/:id/reviews", validateReview ,wrapAsync(async(req,res)=>{
 
 app.all("*",(req,res,next)=>{
     next(new ExpressError(404,"some error"));
-})
+});
 
 
 app.use((err,req,res,next)=>{

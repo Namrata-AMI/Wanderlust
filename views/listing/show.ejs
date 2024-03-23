@@ -56,8 +56,9 @@
 
 
   <p><b>All Reviews</b></p>
+  <div class="row">
   <% for(reviews of listingitem.review){ %>
-<div class="card">
+<div class="card col-5 ms-5 mb-3">
   <div class="card-body">
     <h5 class="card-title"> jane doe  </h5>
     <p class="card-text"> <%= reviews.comment%></p>
@@ -66,6 +67,7 @@
   </div>
 </div>
   <%  } %>
+</div>
     </div>
 </div>
 
