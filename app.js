@@ -40,7 +40,7 @@ app.get("/",(req,res)=>{
 
 /////// validate listing data //////////
 const validateListing = (req,res,next)=>{
-    let error = listingSchema.validate(req.body);             // extract our error
+    let {error} = listingSchema.validate(req.body);             // extract our error
     console.log(error);
     if(error && error.details){
         let errMsg = error.details.map((el)=>el.message).join(",");     // err message
