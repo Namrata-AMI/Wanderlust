@@ -37,6 +37,7 @@ router.post("/", validateReview ,wrapAsync(async(req,res)=>{  // "/" is child ro
     console.log(newReview);
     console.log(listing);
     console.log("new review saved");
+    req.flash("success" ," New Review is Added");
     res.redirect(`/listings/${listing._id}`)   // here listing is =>listing id extracted abode in (req.params.id)//
 
 }));
@@ -47,6 +48,7 @@ router.delete("/:reviewsId",wrapAsync(async(req,res)=>{        // /:reviewId is 
 let {id,reviewsId} = req.params;
 await  listings.findByIdAndUpdate(id,{$pull:{review:reviewsId}});
 await review.findByIdAndDelete(reviewsId);
+req.flash("success" ,"Review is Deleted");
 res.redirect(`/listings/${id}`);
 }))
 

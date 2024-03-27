@@ -40,6 +40,7 @@ router.post("/", validateListing,wrapAsync(async(req,res,next)=>{
     // new listing(req.body.listing)          // here '.listing' is object and using listing a model to access ".listing"// 
     await newListing.save();
     console.log(listings);
+    req.flash("success" ," New Listing is Added");
     res.redirect("/listings");
 })
 );
@@ -49,6 +50,10 @@ router.post("/", validateListing,wrapAsync(async(req,res,next)=>{
 router.get("/:id",wrapAsync(async(req,res)=>{
 let {id} = req.params;
 const listingitem = await listings.findById(id).populate("review");   
+if(!listings){
+    req.flash("error","Listing you requested not Exists!");
+    res.redirect("/listings")
+}
 res.render("listing/show.ejs",{listingitem}); 
 })
 );
@@ -68,6 +73,7 @@ router.put("/:id",validateListing,wrapAsync(async(req,res)=>{
 let {id} = req.params;
 await listings.findByIdAndUpdate(id,{...req.body.listing});  // here, we have deconstructed & updated our javascript obj {...} //
 console.log("edited");
+req.flash("success" ," Listing is Updated");
 res.redirect(`/listings/${id}`);
 })
 );
@@ -78,6 +84,7 @@ router.delete("/:id",wrapAsync(async (req,res)=>{
 let {id} = req.params;
 let deleted = await listings.findByIdAndDelete(id);
 console.log(deleted);
+req.flash("success" ," Listing is Deleted");
 res.redirect("/listings");
 })
 );

@@ -10,7 +10,9 @@
   "author": "namrata",
   "license": "ISC",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "ejs-mate": "^4.0.0",
+    "express-session": "^1.18.0",
     "joi": "^17.12.2",
     "method-override": "^3.0.0"
   }
