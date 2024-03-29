@@ -11,10 +11,15 @@ const ExpressError = require("./utils/ExpressError.js");
 //const Review = require("./models/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 
-const listing = require("./routes/listings.js");
-const reviews = require("./routes/review.js")
+
+const listingRouter = require("./routes/listings.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 
 app.set("view engine","ejs");
@@ -42,15 +47,36 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());                            // always define sessions before "flash"//
 
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));   // users to get authenticate through LocalStrategy method and to authenticate that user we use "authenticate()" method//      //authenticate is our static method// 
+
+passport.serializeUser(User.serializeUser());          // to serialise the user session when on website//
+passport.deserializeUser(User.deserializeUser());      // to deserialise the user session when not using website//
+
+
 app.use((req,res,next)=>{
     res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error")
+    res.locals.error = req.flash("error");
+    res.locals.newUser = req.user;        // here we are storing the current user session //
     next();
 });
 
 
-app.use("/listings",listing);              // here, /listings is a parent route in app.js"
-app.use("/listings/:id/reviews",reviews)      // /listings/:id/reviews is a parent route//
+/*app.get("/demouser",async(req,res)=>{
+    let fakeUser = new User({
+        email:"student@gmail.com",
+        username:"Delta-student",
+    });
+    let registeredUser = await User.register(fakeUser,"helloworld") ; // register() is method to store user data in db//
+    res.send(registeredUser);
+})*/
+
+
+app.use("/listings",listingRouter);              // here, /listings is a parent route in app.js"
+app.use("/listings/:id/reviews",reviewRouter)      // /listings/:id/reviews is a parent route//
+app.use("/",userRouter);
 
 
 

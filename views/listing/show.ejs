@@ -11,27 +11,29 @@
     <div class="card col-6 offset-3 show-card listing-card">
         <img src="<%=listingitem.image%>" class="card-img-top show-img" alt="listing_img">
   <div class="card-body">
-    <p class="card-text">
+    <p class="card-text"> Owned By <i> <%=listingitem.owner.username %> </i></p>
+    <p class="card-text"> <%= listingitem.description %> </p>
+      <p class="card-text">  &#8377;<%= listingitem.price.toLocaleString("en-IN") %></p>
+        <p class="card-text"> <%= listingitem.location %></p>
+          <p class="card-text">  <%= listingitem.country %></p> 
 
-      <%= listingitem.description %> <br>
-      &#8377;<%= listingitem.price.toLocaleString("en-IN") %><br>
-      <%= listingitem.location %><br>
-      <%= listingitem.country %><br>
-    </p> 
   </div>
     </div>
     <br>
 
     <div class="btns mb-5">
+     <% if(newUser && newUser._id.equals(listingitem.owner._id)){ %>
         <a href="/listings/<%= listingitem._id%>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
         <form method="post" action="/listings/<%= listingitem._id %>?_method=DELETE">
             <button class="btn btn-dark offset-5">Delete</button>
         </form>
+   <%  } %>
     </div>
 
 <div class="col-6 offset-3 mb-3">
   <hr>
-  <h4> Leave a comment</h4>
+  <% if(newUser){ %>
+  <h4> Leave a Review</h4>
 
   <form method="post" action="/listings/<%= listingitem._id%>/reviews" novalidate class="needs-validation">
 
@@ -50,6 +52,7 @@
 
     <button class="btn btn-outline-dark">Submit</button>
   </form>
+  <% } %>
 
 </div>
 <hr>
@@ -60,7 +63,7 @@
   <% for(reviews of listingitem.review){ %>
 <div class="card col-5 ms-5 mb-3">
   <div class="card-body">
-    <h5 class="card-title"> jane doe  </h5>
+    <h5 class="card-title"> <%= reviews.author.username %> </h5>
     <p class="card-text"> <%= reviews.comment%></p>
     <p class="card-text"> <%= reviews.rating %> Stars</p>
 
