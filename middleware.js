@@ -1,4 +1,5 @@
 const listings = require("./models/listings.js");
+const newUser = require("./controllers/user.js")
 const Review = require("./models/review.js")
 const ExpressError = require("./utils/ExpressError.js");
 const {listingSchema, reviewSchema} = require("./schema.js");
@@ -29,8 +30,8 @@ module.exports.saveRedirectUrl = (req,res,next)=>{
 
 module.exports.isOwner = async(req,res,next)=>{
     let {id} = req.params;
-    let listings = await listings.findById(id);
-    if(!newUser && listings.owner_id.equals(res.locals.newUser._id)){             // check if ! owner === newUser_id//
+    let listing = await listings.findById(id);
+    if(!newUser && listing.owner_id.equals(res.locals.newUser._id)){             // check if ! owner === newUser_id//
         req.flash("error","you dont have permission to edit");
         return res.redirect(`/listings/${id}`);
     }
@@ -69,10 +70,10 @@ module.exports.validateReview = (req,res,next)=>{
 
 
 
-module.exports.isReviewOwner = async(req,res,next)=>{
-    let {id, reviewId} = req.params;
-    let review = Review.findById(reviewId);
-    console.log(reviewId);
+module.exports.isReviewAuthor = async(req,res,next)=>{
+    let {id, reviewsId} = req.params;
+    let review = await Review.findById(reviewsId);
+    console.log(reviewsId);
     if(!review.author.equals(res.locals.newUser._id)){             // check if ! owner === newUser_id//
         req.flash("error","you dont have permission");
         return res.redirect(`/listings/${id}`);
