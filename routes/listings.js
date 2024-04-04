@@ -14,7 +14,10 @@ const upload = multer({storage}); // now multer will by default save our files i
 
 router.route("/")
 .get( wrapAsync(listingController.index))
-.post( isLoggedIn,  upload.single('listing[image]'), validateListing, wrapAsync(listingController.showListing))
+.post( isLoggedIn,
+     upload.single('listing[image]'),             // a middleware in which multer parse images and upload to cloudnary//
+     validateListing,
+     wrapAsync(listingController.showListing))
 
 
 

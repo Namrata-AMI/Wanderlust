@@ -1,4 +1,9 @@
 const listings = require("../models/listings.js")
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');  // require our geocodimg services
+const mapToken = process.env.MAP_TOKEN;                    // require our maptoken value
+const geocodingClient = mbxGeocoding({ accessToken: mapToken });      // create our base client // we start our services
+
+
 
 
 module.exports.index = async (req,res)=>{
@@ -11,14 +16,26 @@ module.exports.renderNewForm = (req,res)=>{
 res.render("listing/new.ejs");
 }
 
-module.exports.showListing = async(req,res,next)=>{
+module.exports.showListing = async(req,res,next)=>{            //creating a new listing
+   let response = await geocodingClient.forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1,
+      })
+        .send()
+    
+
     const url = req.file.path;
     const filename = req.file.filename;
     const newListing = new listings(req.body.listing);
     newListing.owner = req.user._id;
     newListing.image = {url, filename};
+
+    newListing.geometry = response.body.features[0].geometry
+
     // new listing(req.body.listing)          // here '.listing' is object and using listing a model to access ".listing"// 
-    await newListing.save();
+   let savedListing =  await newListing.save();
+   console.log(savedListing);
+   
    // console.log(listings);
     req.flash("success" ," New Listing is Added");
     res.redirect("/listings");
@@ -44,7 +61,10 @@ module.exports.renderEditForm = async (req,res)=>{
         req.flash("error","Listing you requested not exists!");
         res.redirect("/listings")
     }
-    res.render("listing/edit.ejs",{listing})
+
+    let originalImageUrl = listing.image.url;           // accessing current image url//
+    originalImageUrl = originalImageUrl.replace("/upload","/upload/w_250");  // making changes in url using cloudnary docs here, w_250 ==> width:250px and h_300 ==> height:300px//
+    res.render("listing/edit.ejs",{listing , originalImageUrl});
 }
 
 

@@ -10,7 +10,8 @@
   "author": "namrata",
   "license": "ISC",
   "dependencies": {
-    "cloudinary": "^2.1.0",
+    "@mapbox/mapbox-sdk": "^0.15.5",
+    "cloudinary": "^1.21.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^16.4.5",
     "ejs-mate": "^4.0.0",
