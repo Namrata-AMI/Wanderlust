@@ -8,7 +8,9 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken });      // create 
 
 module.exports.index = async (req,res)=>{
     let allListings = await listings.find({});  
-    res.render("listing/index.ejs",{allListings});
+   const enumValues = listings.schema.path("category").enumValues;  //accessing enum from mongoose schema// listing.schema has path object => category(object) => enumvalues[array];
+    console.log(enumValues)
+    res.render("listing/index.ejs",{allListings,enumValues}); //pass values to template
 }
 
 module.exports.renderNewForm = (req,res)=>{
@@ -16,30 +18,32 @@ module.exports.renderNewForm = (req,res)=>{
 res.render("listing/new.ejs");
 }
 
-module.exports.showListing = async(req,res,next)=>{            //creating a new listing
-   let response = await geocodingClient.forwardGeocode({
-        query: req.body.listing.location,
-        limit: 1,
-      })
-        .send()
+    module.exports.showListing = async(req,res,next)=>{            //creating a new listing
+    let response = await geocodingClient.forwardGeocode({
+            query: req.body.listing.location,
+            limit: 1,
+        })
+            .send()
+        
+        const cate = req.body.listing.category;
+
+        const url = req.file.path;
+        const filename = req.file.filename;
+        const newListing = new listings(req.body.listing);
+        newListing.owner = req.user._id;
+        newListing.image = {url, filename};
+        console.log(" here is your category"+" "+cate);
+        
+        newListing.geometry = response.body.features[0].geometry
+
+        // new listing(req.body.listing)          // here '.listing' is object and using listing a model to access ".listing"// 
+    let savedListing =  await newListing.save();
+    console.log(savedListing);
     
-
-    const url = req.file.path;
-    const filename = req.file.filename;
-    const newListing = new listings(req.body.listing);
-    newListing.owner = req.user._id;
-    newListing.image = {url, filename};
-
-    newListing.geometry = response.body.features[0].geometry
-
-    // new listing(req.body.listing)          // here '.listing' is object and using listing a model to access ".listing"// 
-   let savedListing =  await newListing.save();
-   console.log(savedListing);
-   
-   // console.log(listings);
-    req.flash("success" ," New Listing is Added");
-    res.redirect("/listings");
-}
+    // console.log(listings);
+        req.flash("success" ," New Listing is Added");
+        res.redirect("/listings");
+    }
 
 
 module.exports.createListing = async(req,res)=>{
@@ -90,4 +94,11 @@ module.exports.deleteListing = async (req,res)=>{
     console.log(deleted);
     req.flash("success" ," Listing is Deleted");
     res.redirect("/listings");
+}
+
+
+module.exports.categoryListing = async(req,res)=>{
+    const {id} = req.params;
+    res.send("Working");
+    console.log(values);
 }

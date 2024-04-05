@@ -2,7 +2,7 @@
 
 <script>
   let mapToken = "<%= process.env.MAP_TOKEN %>";
-  let coordinates = <%- JSON.stringify(listingitem.geometry.coordinates) %>;
+  let listing = <%- JSON.stringify(listingitem) %>;
 </script>
 
 <body>
@@ -21,7 +21,10 @@
       <p class="card-text">  &#8377;<%= listingitem.price.toLocaleString("en-IN") %></p>
         <p class="card-text"> <%= listingitem.location %></p>
           <p class="card-text">  <%= listingitem.country %></p> 
+          <p class="card-text">  <%= listingitem.category %></p> 
 
+
+          
   </div>
     </div>
     <br>
