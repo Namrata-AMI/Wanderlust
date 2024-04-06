@@ -40,8 +40,8 @@ router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderE
 
 
 //category route
-router.get("/:id/dest", wrapAsync(listingController.categoryListing)
-);
+/*router.get("/:id/dest", wrapAsync(listingController.categoryListing)
+);*/
 
 module.exports = router;
 

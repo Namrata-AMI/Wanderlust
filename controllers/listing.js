@@ -97,8 +97,8 @@ module.exports.deleteListing = async (req,res)=>{
 }
 
 
-module.exports.categoryListing = async(req,res)=>{
+/*module.exports.categoryListing = async(req,res)=>{
     const {id} = req.params;
     res.send("Working");
     console.log(values);
-}
+}*/
