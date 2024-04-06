@@ -82,9 +82,10 @@ passport.deserializeUser(User.deserializeUser());      // to deserialise the use
 
 
 app.use((req,res,next)=>{
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
+   // res.locals.success = req.flash("success");
+   // res.locals.error = req.flash("error");
     res.locals.newUser = req.user;        // here we are storing the current user session //
+    console.log(res.locals.newUser);
     next();
 });
 
