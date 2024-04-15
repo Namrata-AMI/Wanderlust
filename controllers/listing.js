@@ -5,7 +5,6 @@ const geocodingClient = mbxGeocoding({ accessToken: mapToken });      // create 
 
 
 
-
 module.exports.index = async (req,res)=>{
     let allListings = await listings.find({});  
    const enumValues = listings.schema.path("category").enumValues;  //accessing enum from mongoose schema// listing.schema has path object => category(object) => enumvalues[array];
