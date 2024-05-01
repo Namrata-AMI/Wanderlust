@@ -130,3 +130,9 @@ body{
     display: inline;
 }
 
+
+@media (max-width:800px){
+    .filters{
+        display: none;
+    }
+}
