@@ -21,21 +21,42 @@
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 1rem;
   }
+
+  @media (max-width: 767.98px)and(min-width:480px) {
+    .explore{
+      display: none;
+    }
+    .search{
+      display: none;
+    }
+    .links{
+      display: flex;
+      flex-direction:row;
+      margin-left: 2rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .nav-link{
+      margin-left: 1.5rem;
+      margin-top: -1.5rem;
+    }
+  }
+
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">      <!--it will remain expanded even in medium-->
-    <div class="container-fluid">
+    <div class="container-fluid">         
       <a class="navbar-brand" href="#"><i class="fa-regular fa-compass"></i></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link" href="/listings">Explore</a>
+          <a class="nav-link explore" href="/listings">Explore</a>
         </div>
 
 
-        <div class="navbar-nav ms-auto">
+        <div class="navbar-nav ms-auto search">
           <form class="d-flex" role="search">
             <input class="form-control me-2 search-inp" type="search" placeholder="Search Destination">
             <button class="btn search-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
@@ -43,7 +64,7 @@
         </div>
 
 
-        <div class="navbar-nav ms-auto">
+        <div class="navbar-nav ms-auto links">
           <a class="nav-link" href="/listings/new">Wanderlust your home</a>
           <% if(!newUser){ %>
             <a class="nav-link" href="/signup"><b>Sign-Up</b></a>

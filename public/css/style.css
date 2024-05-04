@@ -131,8 +131,4 @@ body{
 }
 
 
-@media (max-width:800px){
-    .filters{
-        display: none;
-    }
-}
+
