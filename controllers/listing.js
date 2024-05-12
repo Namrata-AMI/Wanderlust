@@ -41,7 +41,7 @@ res.render("listing/new.ejs");
     
     // console.log(listings);
         req.flash("success" ," New Listing is Added");
-        res.redirect("/listings");
+        res.redirect("/listings"); 
     }
 
 
