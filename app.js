@@ -22,7 +22,7 @@
     const LocalStrategy = require("passport-local");
     const User = require("./models/user.js");
     const axios = require("axios");
-    const listings = require("./init/index.js")            // required data.js///////
+    //const listings = require("./init/index.js")            // required data.js///////
 
 
     const listingRouter = require("./routes/listings.js");
@@ -139,58 +139,6 @@
     */
 
 
-
-    
-////////*****  using axios for dataBase initialisation *********///////////
-         const mapboxAccessToken = process.env.MAP_TOKEN;
-         async function geocodeLocation(location){
-            try{
-                const response = await axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json`,
-                {
-                    params:{
-                        access_token : mapboxAccessToken
-                    }
-                });
-                const result = response.data.features[0];
-                const coordinates = result.geometry.coordinates;
-                return {type:"Point",coordinates};
-            }
-            catch(error){
-                console.log("error geocoding location:", location , error);
-                return null;
-            }
-         }
-  
-    async function addGeometryToEachListing(listings){
-        try{
-            const updatedListings = [];
-            for(const listing of listings){
-                const geometry = await geocodeLocation(listing.location);
-                if (geometry) {
-                const updatedListingGeo = ({...listings, geometry});
-                updatedListings.push(updatedListingGeo);
-            }
-        }
-                return updatedListings;
-            }
-            catch(error){
-                console.log("error adding geometry to listings:",error);
-        }
-    }
-    addGeometryToEachListing(listings.data)
-    .then(updatedListings=>
-        initDB(updatedListings))
-        .catch(error =>
-            console.log("ERROR:",error));
-    const initDB = async (initData)=>{
-        await listings.deleteMany({});
-        initData = initData.map((obj)=>
-            ({...obj,owner:"661cd63c8e61911db30be10c"}));
-        await listings.insertMany(initData);
-        console.log("data was initialising");
-    }
-
-/////////////////////////////////////////////////////////////
 
 
 
