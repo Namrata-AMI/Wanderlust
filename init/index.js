@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const initData = require("./data.js");
 const listing = require("../models/listings.js");
 const axios = require('axios');
+let MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const dbUrl = process.env.ATLASDB_URL;
 
 const MAP_TOKEN = "pk.eyJ1IjoiZGVsdGEtc3R1ZHVlbnQiLCJhIjoiY2xvMDk0MTVhMTJ3ZDJrcGR5ZDFkaHl4ciJ9.Gj2VU1wvxc7rFVt5E4KLOQ";
  
@@ -14,7 +16,7 @@ main()
     console.log(err);
 })
 async function main(){
-    await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+    await mongoose.connect(MONGO_URL);
 }
 
 
@@ -54,7 +56,7 @@ try{
        console.log("error adding geometry to listings:",error);
 }
 }
-addGeometryToEachListing(initData.data)
+/*addGeometryToEachListing(initData.data)
 .then(updatedListings=>
 initDB(updatedListings))
 .catch(error =>
@@ -62,10 +64,10 @@ initDB(updatedListings))
 const init = async (initData)=>{
 await listing.deleteMany({});
 initData = initData.map((obj)=>
-   ({...obj,owner:"661cd63c8e61911db30be10c"}));
+   ({...obj,owner:"6606423fd4b7ebd8ad6efbc1"}));
 await listing.insertMany(initData);
 console.log("data was initialising");
-}
+}*/
 
 /////////////////////////////////////////////////////////////
 
@@ -77,7 +79,7 @@ const initDB = async()=>{                             //initialising db//
     await listing.deleteMany({});                     // first empty the db before initilaise//
     initData.data = initData.data.map((obj)=>({
         ...obj,
-        owner:"6606423fd4b7ebd8ad6efbc1",
+        owner:'6606423fd4b7ebd8ad6efbc1',
     }));
     await listing.insertMany(initData.data);           // then inserting data to db//
     console.log("data was initialised");
