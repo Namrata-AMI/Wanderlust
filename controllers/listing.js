@@ -9,6 +9,9 @@ module.exports.index = async (req,res)=>{
     let allListings = await listings.find({});  
  //  const enumValues = listings.schema.path("category").enumValues;  //accessing enum from mongoose schema// listing.schema has path object => category(object) => enumvalues[array];
   //  console.log(enumValues)
+
+    console.log("TOTAL LISTINGS:", allListings.length);
+    console.log("FIRST LISTING:", allListings[0]);
     res.render("listing/index.ejs",{allListings}); //pass values to template
 }
 
@@ -50,7 +53,7 @@ module.exports.createListing = async(req,res)=>{
     const listingitem = await listings.findById(id).populate({path: "review", populate:{path:"author",},}).populate("owner");   
     if(!listingitem){                   // "listingitem" is not exist on above condition basis then execute the followings//
         req.flash("error","Listing you requested not Exists!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     console.log(listingitem);
     res.render("listing/show.ejs",{listingitem}); 
@@ -101,3 +104,13 @@ module.exports.deleteListing = async (req,res)=>{
     res.send("Working");
     console.log(values);
 }*/
+
+
+
+module.exports.categoryListing = async (req, res) => {
+    const { category } = req.params;
+
+    const allListings = await listings.find({ category });
+
+    res.render("listing/index.ejs", { allListings });
+};

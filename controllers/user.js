@@ -25,7 +25,7 @@ module.exports.signup = async(req,res)=>{
      req.flash("error",e.message);
      res.redirect("/signup");
     }
- }
+}
 
 
 module.exports.renderLoginForm = (req,res)=>{
@@ -38,7 +38,7 @@ module.exports.login = (req,res)=>{
     //res.redirect(req.session.redirectUrl); // it will not work because passport after authenticate clears the session and removes this fnx//
     let redirectUrl = res.locals.redirectUrl || "/listings";  // if url not then by default "/listings"//
     res.redirect(redirectUrl);  
-    }
+}
 
 
 module.exports.logOut = (req,res,next)=>{

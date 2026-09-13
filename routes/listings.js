@@ -26,6 +26,35 @@ router.get("/new", isLoggedIn, listingController.renderNewForm);
 
 
 
+
+// category route
+router.get(
+    "/category/:category",
+    wrapAsync(listingController.categoryListing)
+);
+
+
+// id route
+router.route("/:id") 
+.get(wrapAsync(listingController.createListing))  
+.put(
+    isLoggedIn,
+    isOwner,
+    upload.single('listing[image]'),
+    validateListing,
+    wrapAsync(listingController.updateListing)
+) 
+.delete(
+    isLoggedIn,
+    isOwner,
+    wrapAsync(listingController.deleteListing)
+);
+
+
+
+
+
+
 router.route("/:id")
 .get(wrapAsync(listingController.createListing)) 
 .put( isLoggedIn, isOwner, upload.single('listing[image]'), validateListing,  wrapAsync(listingController.updateListing))

@@ -2,111 +2,117 @@
 
 
 <style>
+    #filters {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 
-  #filters{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
+    .filter {
+        text-align: center;
+        margin-right: 2rem;
+        margin-top: 2rem;
+        opacity: 0.7;
+        text-decoration: none;
+        color: black;
+    }
 
-  .filter{
-    text-align: center;
-    margin-right: 2rem;
-    margin-top: 2rem;
-    opacity: 0.7;
-  }
+    .filter:hover {
+        opacity: 1;
+        cursor: pointer;
+        color: black;
+        text-decoration: none;
+    }
 
-  .filter:hover{
-    opacity: 1;
-    cursor:pointer;
-  }
+    .filter p {
+        font-size: 0.8rem;
+        color: black;
+    }
 
-  .filter p{
-    font-size: 0.8rem;
-  }
-
-  .tax-info{
-    display: none;
-  }
-
-  .tax-toggle{
-    border:1px solid black;
-    border-radius: 1rem;
-    height:3.25rem;
-    padding: 0.5rem;
-    display: flex;
-    margin-left: 2rem;
-    align-items: center;
-  }
-
-  @media (max-width:767px){
-    #filters{
+    .tax-info {
         display: none;
     }
-  
-}
 
+    .tax-toggle {
+        border: 1px solid black;
+        border-radius: 1rem;
+        height: 3.25rem;
+        padding: 0.5rem;
+        display: flex;
+        margin-left: 2rem;
+        align-items: center;
+    }
+
+    @media (max-width: 767px) {
+        #filters {
+            display: none;
+        }
+    }
 </style>
+
+
+
 
 <div id="filters">
 
-  <div class="filter">
-    <div><i class="fa-solid fa-fire"></i></div>
-    <p> Trending</p>
-  </div>
+    <a href="/listings/category/Trending" class="filter">
+        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-bed"></i></div>
-    <p> Rooms</p>
-  </div>
+    <a href="/listings/category/Rooms" class="filter">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain-city"></i></div>
-    <p> Iconic cities</p>
-  </div>
+    <a href="/listings/category/Iconic%20cities" class="filter">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic cities</p>
+    </a>
 
-  <div class="filter">
-    <div><i class="fa-solid fa-mountain"></i></div>
-    <p> Mountains</p>
-  </div>
+    <a href="/listings/category/Mountains" class="filter">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountains</p>
+    </a>
 
-    <div class="filter">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p> Castles</p>
+    <a href="/listings/category/Castles" class="filter">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+    </a>
+
+    <a href="/listings/category/Beach" class="filter">
+        <div><i class="fa-solid fa-umbrella-beach"></i></div>
+        <p>Beach</p>
+    </a>
+
+    <a href="/listings/category/Camping" class="filter">
+        <div><i class="fa-solid fa-binoculars"></i></div>
+        <p>Camping</p>
+    </a>
+
+    <a href="/listings/category/Farms" class="filter">
+        <div><i class="fa-solid fa-tractor"></i></div>
+        <p>Farms</p>
+    </a>
+
+    <a href="/listings/category/Amazing%20pools" class="filter">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Amazing pools</p>
+    </a>
+
+    <div class="tax-toggle">
+        <div class="form-check-reverse form-switch">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckDefault"
+            >
+            <label class="form-check-label" for="flexSwitchCheckDefault">
+                Display Total after taxes
+            </label>
+        </div>
     </div>
-  
-    <div class="filter">
-      <div><i class="fa-solid fa-snowflake"></i></div>
-      <p> Arctic</p>
-  </div>
-
-  <div class="filter">
-    <div><i class="fa-solid fa-binoculars"></i></div>
-    <p> Camping</p>
-  </div>
-
-  <div class="filter">
-    <div><i class="fa-solid fa-tractor"></i></div>
-    <p> Farms</p>
-</div>
-
-<div class="filter">
-  <div><i class="fa-solid fa-person-swimming"></i></div>
-  <p> Amazing pools</p>
-</div>
-
-
-
-<div class="tax-toggle">
-  <div class="form-check-reverse form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-    <label class="form-check-label" for="flexSwitchCheckDefault">Display Total after taxes</label>
-  </div>
-</div>
-
-
-
-
 
 </div>
 
